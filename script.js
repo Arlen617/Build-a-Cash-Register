@@ -1,14 +1,14 @@
-let price = 3.26;
+let price = 19.5;
 let cid = [
-  ["PENNY", 1.01],
-  ["NICKEL", 2.05],
-  ["DIME", 3.1],
-  ["QUARTER", 4.25],
-  ["ONE", 90],
-  ["FIVE", 55],
-  ["TEN", 20],
-  ["TWENTY", 60],
-  ["ONE HUNDRED", 100],
+  ["PENNY", 0.5], 
+  ["NICKEL", 0], 
+  ["DIME", 0], 
+  ["QUARTER", 0], 
+  ["ONE", 0], 
+  ["FIVE", 0], 
+  ["TEN", 0], 
+  ["TWENTY", 0], 
+  ["ONE HUNDRED", 0]
 ];
 const input = document.getElementById("cash");
 const output = document.getElementById("change-due");
@@ -28,7 +28,7 @@ backspaceBtn.addEventListener("click", () => {
 
 clearBtn.addEventListener("click", () => {
   input.value = "";
-  output.innerHTML = ""
+  output.innerHTML = "";
 });
 
 const stringToCents = (string) => {
@@ -56,11 +56,10 @@ function checkStatus() {
 }
 
 function calculateChange(cash) {
-  let change = (cash - price) * 100;
+  let change = Math.round((cash - price) * 100);
   let changeUnitsObj = {};
-
   cid.sort((a, b) => stringToCents(b[0]) - stringToCents(a[0]));
-  cid = cid.map((arr) => [arr[0], arr[1] * 100]);
+  cid = cid.map((arr) => [arr[0], Math.round(arr[1] * 100)]);
   cid.forEach((pair) => {
     while (change >= stringToCents(pair[0]) && pair[1] > 0) {
       pair[1] -= stringToCents(pair[0]);
@@ -79,6 +78,7 @@ function calculateChange(cash) {
   for (let key in changeUnitsObj) {
     changeUnitsObj[key] = changeUnitsObj[key] / 100;
   }
+  cid = cid.map((arr) => [arr[0], arr[1] / 100]);
   return changeUnitsObj;
 }
 
