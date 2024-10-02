@@ -13,6 +13,23 @@ let cid = [
 const input = document.getElementById("cash");
 const output = document.getElementById("change-due");
 const button = document.getElementById("purchase-btn");
+const keypadElements = document.querySelectorAll(".numkey");
+const clearBtn = document.querySelector(".clear");
+const backspaceBtn = document.querySelector(".backspace");
+for (let el of keypadElements) {
+  el.onclick = () => {
+    input.value += el.textContent;
+  };
+}
+
+backspaceBtn.addEventListener("click", () => {
+  input.value = input.value.slice(0, input.value.length - 1);
+});
+
+clearBtn.addEventListener("click", () => {
+  input.value = "";
+  output.innerHTML = ""
+});
 
 const stringToCents = (string) => {
   const reference = {
@@ -43,7 +60,6 @@ function calculateChange(cash) {
   let changeUnitsObj = {};
 
   cid.sort((a, b) => stringToCents(b[0]) - stringToCents(a[0]));
-
   cid = cid.map((arr) => [arr[0], arr[1] * 100]);
   cid.forEach((pair) => {
     while (change >= stringToCents(pair[0]) && pair[1] > 0) {
@@ -63,12 +79,11 @@ function calculateChange(cash) {
   for (let key in changeUnitsObj) {
     changeUnitsObj[key] = changeUnitsObj[key] / 100;
   }
-
   return changeUnitsObj;
 }
 
 function createMsg() {
-  let message = `Status: ${checkStatus()}`;
+  let message = `Status: ${checkStatus()}<br>`;
   const changeObj = calculateChange(parseFloat(input.value));
   if (parseFloat(input.value) === price) {
     return "No change due - customer paid with exact cash";
@@ -77,7 +92,7 @@ function createMsg() {
     return "Status: INSUFFICIENT_FUNDS";
   }
   for (let key in changeObj) {
-    message += ` ${key}: $${changeObj[key]}`;
+    message += ` ${key}: $${changeObj[key]}<br>`;
   }
 
   return message;
@@ -87,7 +102,7 @@ function purchase() {
   if (parseFloat(input.value) < price) {
     alert("Customer does not have enough money to purchase the item");
   }
-  output.textContent = createMsg();
+  output.innerHTML = createMsg();
   input.value = "";
 }
 

@@ -1,31 +1,97 @@
+@font-face {
+  font-family: "clock";
+  src: url(/DS-DIGII.TTF);
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  border: 1px solid red;
+}
+
+:root {
+  --text: #33ece5;
+  --screen-background: #3d3356;
+  --device-color: #b5cee4;
+  --numkeycolor: #d2cfcd;
+  --numkey-background: #425e76;
+}
+
+html {
+  height: 100vh;
+  width: 100%;
+  background-color: black;
 }
 
 body {
   padding: 2%;
   width: 100%;
-  height: 100vh;
+  height: 95vh;
+  max-width: 425px;
+  margin: 2vh auto 0 auto;
+  background-color: var(--device-color);
+  border-radius: 10px;
 }
 
 .monitor {
   width: 100%;
-  height: 40%;
+  height: 45%;
   padding: 2%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 5%;
   margin-bottom: 5%;
+  background-color: var(--screen-background);
+  color: var(--text);
+  font-family: clock;
+  font-size: 2rem;
+  padding: 1%;
+  border: 1px solid black;
 }
 
 input {
   width: 100%;
+  background: inherit;
+  border: none;
+  color: inherit;
+  font: inherit;
 }
 
 .keypad {
-  height: 55%;
+  width: 100%;
+  height: 50%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+}
+
+.numkey {
+  background-color: var(--numkey-background);
+  color: var(--numkeycolor);
+  font-size: 2rem;
+  font-weight: bolder;
+}
+
+.clear {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+
+.backspace {
+  grid-column: 2 / span 2;
+  grid-row: 1 / 2;
+  background-color: #3692d6;
+}
+
+#purchase-btn {
+  grid-column: 2 / 4;
+}
+
+.clear,
+#purchase-btn {
+  color: var(--numkeycolor);
+  background-color: #da554c;
+  font-size: 1.5rem;
+  font-weight: bolder;
 }
